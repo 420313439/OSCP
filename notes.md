@@ -1,3 +1,5 @@
+# OSCP笔记
+
 ## 第一件事情：改root密码
 root@kali:/# passwd
 
