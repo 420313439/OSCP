@@ -47,3 +47,20 @@ msf> set threads 10
 msf> exploit                # 开始
 
 
+
+## Kioptrix Level 1
+### SSH信息枚举（SSH版本）
+查看版本，然后去`searchsploit`或exploit-db找漏洞
+
+### HTTP信息枚举（Web Server版本，目录，文件等）
+1. 查看网页源码
+2. 查看HTTP通信流量
+3. 目录扫描（dirbuster, nikto，御剑）
+
+字典：github: dirbuster wordlist
+
+### SMB信息枚举（OS版本，SMB版本，$IPC等）
+root@kali:/# enum4linux
+msf5> use auxiliary/scanner/smb/smb_version
+root@kali:/# nbtscan
+root@kali:/# smbclient
