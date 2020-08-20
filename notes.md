@@ -60,7 +60,13 @@ msf> exploit                # 开始
 字典：github: dirbuster wordlist
 
 ### SMB信息枚举（OS版本，SMB版本，$IPC等）
-root@kali:/# enum4linux
-msf5> use auxiliary/scanner/smb/smb_version
-root@kali:/# nbtscan
-root@kali:/# smbclient
+enum4linux
+msf> use auxiliary/scanner/smb/smb_version
+nbtscan
+smbclient
+
+### DNS枚举
+root@kali:/# host [-t [ns|mx]] zonetransfer.me
+root@kali:/# host -l <url> <ns>     # DNS Zone Transfer
+root@kali:/# dnsrecon
+root@kali:/# dnsenum
