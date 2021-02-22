@@ -117,7 +117,7 @@ https://www.virustotal.com/
   
 > The last thing to try  
   
-暴力破解SSH
+暴力破解SSH  
 kali> hydra -v -l root -P /usr/share/wordlists/rockyou.txt X.X.X.X ssh -t 4s  
 
 
